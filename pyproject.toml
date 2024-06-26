@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "protoconfloader"
+version = "0.1.0"
+description = ""
+authors = ["Aviv Laufer <aviv.laufer@gmail.com>","Shahar Mintz <shahar.mintz309@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+inotify = "^0.2.10"
+grpclib = "^0.4.7"
+protobuf = "^5.27.1"
+asyncio = "^3.4.3"
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.2.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
