@@ -5,7 +5,6 @@
 export PYTHONPATH=$PYTHONPATH:$(pwd)
 pkill -9 protoconf >/dev/null 2>&1
 protoconf agent -dev tests/test_data/. &
-#pytest --cov=protoconfloader tests/ 
-python -m pytest -s  
+pytest --cov=protoconfloader tests/
 pkill  -9 protoconf >/dev/null 2>&1
 
