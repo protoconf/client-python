@@ -7,14 +7,19 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-inotify = "^0.2.10"
 grpclib = "^0.4.7"
 protobuf = "^5.27.1"
 asyncio = "^3.4.3"
+grpcio = "^1.65.5"
+grpcio-tools = "^1.65.5"
+watchdog = "^4.0.2"
+aiofiles = "^24.1.0"
 
 
 [tool.poetry.group.test.dependencies]
-pytest = "^8.2.2"
+pytest = "^8.3.2"
+pytest-asyncio = "^0.23.8"
+pytest-cov = "^5.0.0"
 
 [build-system]
 requires = ["poetry-core"]

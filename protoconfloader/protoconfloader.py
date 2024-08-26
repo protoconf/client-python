@@ -1,14 +1,14 @@
-import aiofiles
 import asyncio
-import grpc
 import json
 import logging
 import os
 import pathlib
 import sys
-from google.protobuf.any_pb2 import Any
-from google.protobuf.json_format import Parse
 from typing import Any, Callable
+
+import aiofiles
+import grpc
+from google.protobuf.json_format import Parse
 from watchdog.events import FileSystemEvent, FileSystemEventHandler
 from watchdog.observers import Observer
 
@@ -167,11 +167,11 @@ class Configuration:
                 task1.result(),
                 task2.result(),
             )
-        except* asyncio.CancelledError:
+        except asyncio.CancelledError:
             self.logger.info("Tasks were cancelled")
-        except* Exception as e:
+        except Exception as e:
             self.logger.error("Error in watch_config: %s", e)
-            for exc in e.exceptions:
-                self.logger.error("Sub-exception: %s", exc)
-                self.logger.error("Traceback: ", exc_info=exc)
-            exit(os.EX_UNAVAILABLE)
+            # Removed the incorrect handling of exceptions as instances of Exception do not have an 'exceptions' member
+            # Instead, directly log the exception and its traceback
+            self.logger.error("Error traceback: ", exc_info=e)
+            sys.exit(os.EX_UNAVAILABLE)
