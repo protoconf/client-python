@@ -6,6 +6,5 @@
 
 pkill -9 protoconf >/dev/null 2>&1
 protoconf agent -dev tests/test_data/. &
-python demo_app.py    
-pkill  -9 protoconf >/dev/null 2>&1
-
+python demo_app/demo_app.py
+pkill -9 protoconf >/dev/null 2>&1
