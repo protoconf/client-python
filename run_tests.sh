@@ -5,6 +5,8 @@
 export PYTHONPATH=$PYTHONPATH:$(pwd)
 pkill -9 protoconf >/dev/null 2>&1
 protoconf agent -dev tests/test_data/. &
-pytest --cov=protoconfloader tests/
+pytest --cov=protoconfloader tests/ --cov-report=xml:coverage.xml
+
 pkill  -9 protoconf >/dev/null 2>&1
+codecovcli upload-process -t 008541cb-cbb4-41bc-ba95-68694e13f77f
 
