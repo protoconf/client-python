@@ -32,13 +32,14 @@ async def test_load_invalid_json_config():
         return_value='{"crawlers": [}'  # Invalid JSON
     )
     message = CrawlerService()
-    config = Configuration(message, "test_service", logging.getLogger())
+    config = Configuration(message, "crawler/text_crawler", logging.getLogger())
 
     # Act & Assert
     with patch("builtins.open", mock_open):
         with pytest.raises(RuntimeError, match="Error decoding JSON"):
             await config.load_config("tests/test_data", "invalid_config.json")
-                                     
+
+
 @pytest.mark.asyncio
 async def test_listen_to_changes_remote():
     # Setup
@@ -52,14 +53,17 @@ async def test_listen_to_changes_remote():
     config = Configuration(message, "crawler/text_crawler", logging.getLogger())
     mock_callback = AsyncMock()
     callback_event = asyncio.Event()
+
     # Act
+    await config.load_config("tests/test_data", "config.json")
+
     async def async_callback(message):
         await mock_callback(message)
         callback_event.set()
 
     config.on_config_change(async_callback)
     watch_task = asyncio.create_task(config.watch_config())
-    
+
     await asyncio.sleep(0.3)
 
     # Assert

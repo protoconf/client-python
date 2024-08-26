@@ -56,17 +56,16 @@ class Configuration:
     function to be executed whenever the configuration changes.
     """
 
-    def __init__(self, message: Any, service_name: str, logger: logging.Logger) -> None:
+    def __init__(self, message: Any, config_path: str, logger: logging.Logger) -> None:
         """
         Initializes the configuration with the given message and service name.
         """
         self.message = message
-        self.service_name = service_name
         self.logger = logger
         self.is_loaded = False
         self.is_watching_file = False
         self.is_watching_agent = False
-        self.config_dir = None
+        self.config_path = config_path
         self.config_file = None
         self.lock = asyncio.Lock()
         self.on_config_change_callback = None
@@ -78,14 +77,13 @@ class Configuration:
         """
         self.logger = logger
 
-    async def load_config(self, config_dir: str, config_name: str) -> None:
+    async def load_config(self, config_path: str, config_name: str) -> None:
         """
         Loads the configuration from the specified file.
         """
         if self.is_loaded:
             return
-        self.config_dir = config_dir
-        self.config_file = config_name
+        self.config_file = os.path.join(config_path, config_name)
         try:
             await self._load_config()
             self.is_loaded = True
@@ -99,8 +97,7 @@ class Configuration:
         """
         try:
 
-            config_path = pathlib.Path(self.config_dir) / self.config_file
-            async with aiofiles.open(config_path, "r", encoding="utf-8") as f:
+            async with aiofiles.open(self.config_file, "r", encoding="utf-8") as f:
                 config_data = json.loads(await f.read())
             async with self.lock:
 
@@ -144,7 +141,7 @@ class Configuration:
         self.logger.info("Starting watching config file")
         handler = _EventHandler(self._load_config, self.config_file)
         observer = Observer()
-        observer.schedule(handler, self.service_name, recursive=True)
+        observer.schedule(handler, self.config_file, recursive=True)
         observer.start()
         self.logger.info("Observer started")
         try:
@@ -160,7 +157,7 @@ class Configuration:
         """
         try:
             async with asyncio.TaskGroup() as tg:
-                task1 = tg.create_task(self._listen_to_changes(self.service_name))
+                task1 = tg.create_task(self._listen_to_changes(self.config_path))
                 task2 = tg.create_task(self._file_watcher(delay))
             self.logger.info(
                 "Both tasks have completed now: %s, %s",
