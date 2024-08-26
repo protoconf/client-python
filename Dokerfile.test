@@ -1,0 +1,14 @@
+# Get python version
+FROM python:3.11-slim
+RUN apt-get update \
+  && apt-get install -y wget
+
+RUN mkdir pl 
+WORKDIR pl
+ADD . $WORKDIR
+RUN pip install --upgrade pip
+RUN pip install -r requirements-test.txt
+RUN wget https://github.com/protoconf/protoconf/releases/download/v0.2.0-alpha1/protoconf_0.2.0-alpha1_linux_amd64.tar.gz
+RUN tar xvzf protoconf_0.2.0-alpha1_linux_amd64.tar.gz
+RUN cp protoconf /usr/local/bin
+CMD ["./run_tests.sh"]
