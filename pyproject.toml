@@ -8,10 +8,10 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 grpclib = "^0.4.7"
-protobuf = "^5.27.1"
+protobuf = "^5.27.4"
 asyncio = "^3.4.3"
-grpcio = "^1.65.5"
-grpcio-tools = "^1.65.5"
+grpcio = "^1.66.0"
+grpcio-tools = "^1.66.0"
 watchdog = "^5.0.0"
 aiofiles = "^24.1.0"
 
