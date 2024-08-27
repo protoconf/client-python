@@ -1,5 +1,8 @@
+<h1 style="text-align: center;">Test</h1><p align="center">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/f/fd/Greek_uc_alpha.png" />
+  
+</p>
 
-<H1> WIP </H1>
 
 <p align="center">
   <img src="https://avatars.githubusercontent.com/u/51154987?s=200&v=4" width="100" alt="project-logo">
