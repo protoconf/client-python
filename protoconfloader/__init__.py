@@ -1,1 +1,0 @@
-from .protoconfloader import Configuration

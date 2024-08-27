@@ -2,7 +2,6 @@ import asyncio
 import json
 import logging
 import os
-import pathlib
 import sys
 from typing import Any, Callable
 
@@ -12,6 +11,7 @@ from google.protobuf.json_format import Parse
 from watchdog.events import FileSystemEvent, FileSystemEventHandler
 from watchdog.observers import Observer
 
+sys.path.append(os.path.join(os.path.dirname(__file__), "."))
 from agent.api.proto.v1.protoconf_service_pb2 import ConfigSubscriptionRequest
 from agent.api.proto.v1.protoconf_service_pb2_grpc import ProtoconfServiceStub
 
