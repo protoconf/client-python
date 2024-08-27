@@ -12,7 +12,7 @@ protobuf = "^5.27.1"
 asyncio = "^3.4.3"
 grpcio = "^1.65.5"
 grpcio-tools = "^1.65.5"
-watchdog = "^4.0.2"
+watchdog = "^5.0.0"
 aiofiles = "^24.1.0"
 
 
