@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "protoconfloader"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["Aviv Laufer <aviv.laufer@gmail.com>","Shahar Mintz <shahar.mintz309@gmail.com>"]
 readme = "README.md"
