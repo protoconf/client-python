@@ -29,6 +29,8 @@
 - [🚀 Getting Started](#-getting-started)
   - [🔖 Prerequisites](#-prerequisites)
   - [📦 Installation](#-installation)
+- [🤝 Contributing](#-contributing)
+- [🎗 License](#-license)
 </details>
 <hr>
 
@@ -75,3 +77,14 @@ Build the project from source:
 ```sh
 ❯ pip install -r requirements.txt
 ```
+## 🤝 Contributing
+Contributions are welcome! Here are several ways you can contribute:
+
+- **[Report Issues](https://github.com/protoconf/client-python/issues)**: Submit bugs found or log feature requests for the `client-python` project.
+- **[Submit Pull Requests](https://github.com/protoconf/client-python/blob/main/CONTRIBUTING.md)**: Review open PRs, and submit your own PRs.
+- **[Join the Discussions](https://discord.protoconf.sh/)**: Share your insights, provide feedback, or ask questions.
+
+## 🎗 License
+
+This project is protected under the [MIT](https://choosealicense.com/licenses/mit/) License.<br>
+For more details, refer to the [LICENSE](https://github.com/protoconf/client-python/blob/main/LICENSE) file.
