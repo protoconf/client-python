@@ -26,6 +26,9 @@
 
 - [📍 Overview](#-overview)
 - [🧩 Features](#-features)
+- [🚀 Getting Started](#-getting-started)
+  - [🔖 Prerequisites](#-prerequisites)
+  - [📦 Installation](#-installation)
 </details>
 <hr>
 
@@ -44,3 +47,31 @@ It supports loading configuration from files, watching for file changes, and sub
 - Subscribe to configuration updates from a Protoconf server
 - Hot Reload of configuration changes
 - Thread-safe access to configuration values
+## 🚀 Getting Started
+
+### 🔖 Prerequisites
+
+**Python**: `version 3.11`
+
+### 📦 Installation
+Using pip
+```
+pip install protoconfloader
+```
+
+Build the project from source:
+
+1. Clone the client-python repository:
+```sh
+❯ git clone https://github.com/protoconf/client-python
+```
+
+2. Navigate to the project directory:
+```sh
+❯ cd client-python
+```
+
+3. Install the required dependencies:
+```sh
+❯ pip install -r requirements.txt
+```
