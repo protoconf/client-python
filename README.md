@@ -1,4 +1,4 @@
-<h1 style="text-align: center;">Test</h1><p align="center">
+<h1 style="text-align: center;">We are still in alpha!</h1><p align="center">
   <img src="https://upload.wikimedia.org/wikipedia/commons/f/fd/Greek_uc_alpha.png" />
   
 </p>
