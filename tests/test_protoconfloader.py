@@ -150,5 +150,19 @@ def test_on_modified_nonexistent_file():
     )
 
 
+def test_set_logger():
+    # Setup
+    config = Configuration(
+        message=Mock(), config_path="crawler/text_crawler", logger=logging.getLogger()
+    )
+    new_logger = logging.getLogger("new_logger")
+
+    # Act
+    config.set_logger(new_logger)
+
+    # Assert
+    assert config.logger == new_logger
+
+
 if __name__ == "__main__":
     pytest.main()
