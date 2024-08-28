@@ -1,3 +1,4 @@
 ignore:
   - (?s:.*/[^\/]*_pb2\.py)\Z
   - ^demo_app.*
+  - "protoconfloader/agent/api/proto/v1/"
