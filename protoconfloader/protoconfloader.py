@@ -161,11 +161,6 @@ class Configuration:
             async with asyncio.TaskGroup() as tg:
                 task1 = tg.create_task(self._listen_to_changes(self.config_path))
                 task2 = tg.create_task(self._file_watcher(delay))
-            self.logger.info(
-                "Both tasks have completed now: %s, %s",
-                task1.result(),
-                task2.result(),
-            )
         except asyncio.CancelledError:
             self.logger.info("Tasks were cancelled")
         except Exception as e:
