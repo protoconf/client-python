@@ -16,12 +16,15 @@ async def test_load_config_local():
         return_value='{"crawlers": []}'
     )
     message = CrawlerService()
-    config = Configuration(message, "test_service", logging.getLogger())
+    mock_logger = MagicMock()
+    config = Configuration(message, "test_service", mock_logger)
 
     # Act
     await config.load_config("tests/test_data", "config.json")
 
     assert message.log_level == 3
+    await config.load_config("tests/test_data", "config.json")
+    mock_logger.info.assert_called_once_with("Config file is already loaded")
 
 
 @pytest.mark.asyncio

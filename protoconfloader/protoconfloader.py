@@ -83,6 +83,7 @@ class Configuration:
         Loads the configuration from the specified file.
         """
         if self.is_loaded:
+            self.logger.info("Config file is already loaded")
             return
         self.config_file = os.path.join(config_path, config_name)
         try:
