@@ -73,5 +73,63 @@ async def test_listen_to_changes_remote():
     await asyncio.gather(watch_task, return_exceptions=True)
 
 
+@pytest.mark.asyncio
+async def test_load_config_nonexistent_file():
+    # Setup
+    message = CrawlerService()
+    config = Configuration(message, "test_service", logging.getLogger())
+    mock_callback = AsyncMock()
+    callback_event = asyncio.Event()
+
+    # Act
+    async def async_callback(message):
+        await mock_callback(message)
+        callback_event.set()
+
+    config.on_config_change(async_callback)
+
+    # Act & Assert
+    with patch("builtins.open", side_effect=FileNotFoundError):
+        with pytest.raises(FileNotFoundError):
+            await config.load_config("tests/test_data", "nonexistent_config.json")
+
+        assert not callback_event.is_set()
+        mock_callback.assert_not_called()
+
+
+@pytest.mark.asyncio
+async def test_watch_config_remote_same_log_level():
+    # Setup
+    mock_channel = AsyncMock()
+    mock_client = MagicMock()
+    mock_client.SubscribeForConfig = AsyncMock(
+        return_value=iter([MagicMock(value=MagicMock(log_level=3))])
+    )
+    mock_channel.return_value.__aenter__.return_value = mock_client
+    message = CrawlerService()
+    config = Configuration(message, "crawler/text_crawler", logging.getLogger())
+    mock_callback = AsyncMock()
+    callback_event = asyncio.Event()
+
+    # Act
+    await config.load_config("tests/test_data", "config.json")
+
+    async def async_callback(message):
+        await mock_callback(message)
+        callback_event.set()
+
+    config.on_config_change(async_callback)
+    watch_task = asyncio.create_task(config.watch_config())
+
+    await asyncio.sleep(0.3)
+
+    # Assert
+    assert callback_event.is_set()
+    mock_callback.assert_called_once()
+    assert message.log_level == 17
+    watch_task.cancel()
+    await asyncio.gather(watch_task, return_exceptions=True)
+
+
 if __name__ == "__main__":
     pytest.main()
