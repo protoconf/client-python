@@ -1,0 +1,3 @@
+ignore:
+  - "**/*_pb2.py"
+  - "demo_app"
