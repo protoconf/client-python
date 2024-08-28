@@ -3,8 +3,8 @@ import logging
 from unittest.mock import AsyncMock, MagicMock, patch, Mock
 
 import pytest
-
-from protoconfloader.protoconfloader import Configuration
+from watchdog.events import FileSystemEvent
+from protoconfloader.protoconfloader import Configuration, _EventHandler
 from tests.test_data.crawler_pb2 import CrawlerService
 
 
@@ -129,6 +129,25 @@ async def test_watch_config_remote_same_log_level():
     assert message.log_level == 17
     watch_task.cancel()
     await asyncio.gather(watch_task, return_exceptions=True)
+
+
+def test_on_modified_nonexistent_file():
+    # Setup
+    event = FileSystemEvent("nonexistent_config.json")
+    mock_logger = MagicMock()
+    handler = _EventHandler(
+        cb=MagicMock(), config_file="nonexistent_config.json", logger=mock_logger
+    )
+
+    # Act
+    handler.on_modified(event)
+
+    # Assert
+    # handler.load_config_cb.assert_not_called()
+
+    mock_logger.error.assert_called_once_with(
+        "Error loading config: %s", "nonexistent_config.json"
+    )
 
 
 if __name__ == "__main__":

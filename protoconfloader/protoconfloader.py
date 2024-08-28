@@ -23,7 +23,7 @@ class _EventHandler(FileSystemEventHandler):
     A custom FileSystemEventHandler that watches for file modifications and triggers a callback function when the specified configuration file is modified.
     """
 
-    def __init__(self, cb: Callable, config_file: str):
+    def __init__(self, cb: Callable, config_file: str, logger: logging.Logger) -> None:
         """
         Initializes the event handler with a callback function and the name of the configuration file to watch.
 
@@ -32,6 +32,7 @@ class _EventHandler(FileSystemEventHandler):
         """
         self.config_file = config_file
         self.load_config_cb = cb
+        self.logger = logger
 
     def on_modified(self, event: FileSystemEvent) -> None:
         """
@@ -42,8 +43,8 @@ class _EventHandler(FileSystemEventHandler):
         if os.path.basename(event.src_path) == self.config_file:
             try:
                 asyncio.run(self.load_config_cb())
-            except Exception as e:
-                print(f"Error loading config: {e}")
+            except Exception:
+                self.logger.error("Error loading config: %s", self.config_file)
 
 
 class Configuration:
@@ -88,6 +89,7 @@ class Configuration:
             await self._load_config()
             self.is_loaded = True
         except FileNotFoundError as e:
+
             self.logger.error("Config file not found: %s", e)
             raise  # Re-raise the exception to allow the caller to handle it
 
@@ -139,7 +141,7 @@ class Configuration:
         Watches the configuration file for changes and reloads it if modified.
         """
         self.logger.info("Starting watching config file")
-        handler = _EventHandler(self._load_config, self.config_file)
+        handler = _EventHandler(self._load_config, self.config_file, self.logger)
         observer = Observer()
         observer.schedule(handler, self.config_file, recursive=True)
         observer.start()
