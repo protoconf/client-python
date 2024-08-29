@@ -1,7 +1,7 @@
 aiofiles==24.1.0 ; python_version >= "3.11" and python_version < "4.0"
 asyncio==3.4.3 ; python_version >= "3.11" and python_version < "4.0"
 grpcio-tools==1.66.0 ; python_version >= "3.11" and python_version < "4.0"
-grpcio==1.66.0 ; python_version >= "3.11" and python_version < "4.0"
+grpcio==1.66.1 ; python_version >= "3.11" and python_version < "4.0"
 grpclib==0.4.7 ; python_version >= "3.11" and python_version < "4.0"
 h2==4.1.0 ; python_version >= "3.11" and python_version < "4.0"
 hpack==4.0.0 ; python_version >= "3.11" and python_version < "4.0"
